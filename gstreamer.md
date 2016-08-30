@@ -99,7 +99,11 @@ But it has the feature, the any program (here it is ARToolkit) which calls this 
 
 ### gstreamer-0.10
 
+- `./simpleTest "filesrc location=video.mkv ! decodebin2 ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! fakesink"`
+
 ### gstreamer-1.0
+
+- `./simpleTest ""`
 
 ## Camera
 
@@ -122,16 +126,6 @@ Non-WORKING SETUP WITH UDP STREAM from OpenCV Webcam:
 ###  gstreamer-1.0
 
 - gst-launch-1.0 -v udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)640, height=(string)480, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)1978155436, timestamp-offset=(uint)3180518504, seqnum-offset=(uint)28674" ! rtpvrawdepay ! videoconvert ! ximagesink
-
-
-
-## Video
-
-## gstreamer-0.10
-
-- `- `./simpleTest "filesrc location=video.mkv ! decodebin2 ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! fakesink"``
-
-### gstreamer-1.0
 
 #### Testsource
 
