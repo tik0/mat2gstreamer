@@ -29,6 +29,9 @@ Open camera by OpenCV and send it to UDP/RTP
     - If you want to send images larger than that, they need to be fragmented via rtp
     - Server: `gst-launch-1.0 -v videotestsrc ! video/x-raw, format=BGR, framerate=25/1, width=100, height=100 ! rtpvrawpay ! udpsink host=localhost port=5000`
     - Client (with copied caps string from server output with `application/x-rtp`): `gst-launch-1.0 -v udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)100, height=(string)100, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)1978155436, timestamp-offset=(uint)3180518504, seqnum-offset=(uint)28674" ! rtpvrawdepay ! videoconvert ! ximagesink`
+  - RAW RTP/UDP using gstreamer 0.10:
+  - Server: `gst-launch -v videotestsrc ! video/x-raw-rgb, framerate=25/1, width=100, height=100 ! rtpvrawpay ! udpsink host=localhost port=5000`
+  - Client: `gst-launch-1.0 -v udpsrc port=5000 caps=" application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)RGB, depth=(string)8, width=(string)100, height=(string)100, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)3496538899, clock-base=(uint)2820015588, seqnum-base=(uint)5902" ! rtpvrawdepay ! videoconvert ! ximagesink`
 - videoconvert feature:
   - https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-plugins/html/gst-plugins-base-plugins-videoconvert.html
   - This will output a test video (generated in YUY2 format) in a video window. If the video sink selected does not support YUY2 videoconvert will automatically convert the video to a format understood by the video sink: `gst-launch-1.0 -v videotestsrc ! video/x-raw,format=YUY2 ! videoconvert ! autovideosink`
