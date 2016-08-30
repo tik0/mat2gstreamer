@@ -3,6 +3,13 @@
 
 - Tested with Ubuntu 14.04.5
 
+# Hints
+
+- Known misstakes
+  - in `... ! videoconvert ! video/x-raw width=1920, height=1080, format=RGB ,bpp=24 ! ...` there is now `,` between `video/x-raw` and the afterwards comma-seperated list
+  - Commonly, the sink tells the source what it expects, but if not you can tell the sink with so called `caps` (capabilities) the target format`... ! videoconvert ! video/x-raw width=1920, height=1080, format=RGB ,bpp=24 ! ...`. These `caps` are just another element in the pipeline, but are no plugin.
+
+
 # Debugging
 
 - Set debug output for current executed application (http://docs.gstreamer.com/display/GstSDK/gst-launch):
