@@ -14,11 +14,17 @@ Open camera by OpenCV and send it to UDP/RTP
 ## Hints
 
 - Webcam example: `gst-launch-1.0 v4l2src ! xvimagesink`
-- RTP example
+- Get debug messages of `gst-launch-1.0` with argument `--gst-debug-level=5`
+- List available plugins: `gst-inspect-1.0`
+- List features of a plugin: `gst-inspect-1.0 <PLUGIN_NAME>`
+- UDP example
   - RAW UDP
     - Since the maximum packagesize of UDP is 65507, only video of with very low resolution can be send
     - Server: `gst-launch-1.0 -v videotestsrc ! video/x-raw, format=BGRx, framerate=25/1, width=100, height=100 ! udpsink host=localhost port=5000`
     - Client (with copied caps string from server output with `application/x-rtp`): `gst-launch-1.0 udpsrc port=5000 caps="video/x-raw, format=(string)BGRx, width=(int)100, height=(int)100, framerate=(fraction)25/1, pixel-aspect-ratio=(fraction)1/1, interlace-mode=(string)progressive" ! ximagesink`
+    - or even simpler (https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-good-plugins/html/gst-plugins-good-plugins-udpsink.html)
+    - Server: ``
+    - Client
   - RAW RTP/UDP
     - If you want to send images larger than that, they need to be fragmented via rtp
     - Server: `gst-launch-1.0 -v videotestsrc ! video/x-raw, format=BGR, framerate=25/1, width=100, height=100 ! rtpvrawpay ! udpsink host=localhost port=5000`
