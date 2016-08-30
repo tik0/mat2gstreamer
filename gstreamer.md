@@ -50,6 +50,7 @@ Using H.264 testsamples from `http://jell.yfish.us/`: `http://jell.yfish.us/medi
 
 - `gst-launch-1.0 -v playbin uri=file:///path/to/somefile.mp4`
 - `gst-launch-1.0 -v playbin uri=file:///path/video.mkv`
+- `gst-launch-1.0 -v filesrc location=/path/video.mkv ! matroskademux ! avdec_h264 ! autovideosink`
 - `gst-launch-1.0 -v filesrc location=/path/video.mkv ! matroskademux ! avdec_h264 ! videoconvert ! autovideosink`
 - Hints
   - GSTREAMER 1.0 Playback a file: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-plugins/html/gst-plugins-base-plugins-playbin.html
@@ -90,6 +91,9 @@ Using H.264 testsamples from `http://jell.yfish.us/`: `http://jell.yfish.us/medi
 - RTP/UDP with testsource
   - Client: `gst-launch-1.0 -v udpsrc port=5000 caps=" application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)RGB, depth=(string)8, width=(string)640, height=(string)480, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)3496538899, clock-base=(uint)2820015588, seqnum-base=(uint)5902" ! rtpvrawdepay ! videoconvert ! ximagesink`
   - Server: `gst-launch-1.0 -v videotestsrc ! video/x-raw, format=RGB, framerate=25/1, width=640, height=480 ! rtpvrawpay ! udpsink host=localhost port=5000`
+- RTP/UDP with mat2gstreamer
+  - Client: `gst-launch-1.0 -v udpsrc port=5000 caps=" application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)640, height=(string)480, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)3496538899, clock-base=(uint)2820015588, seqnum-base=(uint)5902" ! rtpvrawdepay ! videoconvert ! ximagesink`
+  - Server: `./mat2gstreamer`
 
 # ARtoolkit
 
@@ -115,11 +119,17 @@ But it has the feature, the any program (here it is ARToolkit) which calls this 
 
 ### gstreamer-1.0
 
-- `./simpleTest ""`
+- Does not work properly: `./simpleTest 'filesrc location=video.mkv ! matroskademux ! avdec_h264 ! identity name=artoolkit sync=true ! capabilities video/x-raw,width=1920,height=1080,format=RGB,bpp=24 ! fakesink'`
 
 ## Camera
 
+### gstreamer-0.10
+
 - `./simpleTest -device=GStreamer  "v4l2src ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink"`
+
+### gstreamer-1.0
+
+- Does not work: `./simpleTest -device=GStreamer  "v4l2src device="/dev/video0" ! videoconvert ! video/x-raw,format=RGB,width=640,height=480,framerate=30/1 ! identity name=artoolkit sync=true ! fakesink"`
 
 ## UDP
 
