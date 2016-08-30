@@ -1,53 +1,50 @@
 
 # Debugging
 
-- SET DEBUG OUTPUT for all applications (http://docs.gstreamer.com/display/GstSDK/gst-launch):
-- export GST_DEBUG=2 : Like `-v`in the console
-- export GST_DEBUG=5 2>&1 | grep caps: Get the capabilities of the pipeline
-- export GST_DEBUG=5 : Ultra verbose
+- Set debug output for current executed application (http://docs.gstreamer.com/display/GstSDK/gst-launch):
+- `export GST_DEBUG=2` : Like `-v`in the console
+- `export GST_DEBUG=5 2>&1 | grep caps`: Get the capabilities of the pipeline
+- `export GST_DEBUG=5` : Ultra verbose
 
 # testsource
 
 ## gstreamer-0.10
 
-- gst-launch-0.10 videotestsrc ! video/x-raw-rgb,bpp=24,width=1000,height=1000 ! autoconvert ! ximagesink
-- gst-launch-0.10 videotestsrc ! autoconvert  ! ximagesink
-- gst-launch-0.10 videotestsrc ! ximagesink
+- `gst-launch-0.10 videotestsrc ! video/x-raw-rgb,bpp=24,width=1000,height=1000 ! autoconvert ! ximagesink`
+- `gst-launch-0.10 videotestsrc ! autoconvert ! ximagesink`
+- `gst-launch-0.10 videotestsrc ! ximagesink`
 
 ## gstreamer-1.0
 
-- gst-launch-1.0 videotestsrc ! video/x-raw, format="I420" ,width=640,height=480,framerate=30/1 ! identity name=artoolkit sync=true ! autovideosink
+- `gst-launch-1.0 videotestsrc ! video/x-raw, format="I420" ,width=640,height=480,framerate=30/1 ! identity name=artoolkit sync=true ! autovideosink`
 
 # Video Playback
 
-Using H.264 testsamples from `http://jell.yfish.us/`: http://jell.yfish.us/media/jellyfish-3-mbps-hd-h264.mkv
+Using H.264 testsamples from `http://jell.yfish.us/`: `http://jell.yfish.us/media/jellyfish-3-mbps-hd-h264.mkv` as `video.mkv`
 
 ## gstreamer-0.10
 
-- Playback Video for ARToolkit in gstreamer 0.10: ./simpleTest "filesrc location=video.mkv ! decodebin2 ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink"
-- don't know why this does not work: ./simpleTest "playbin uri=file:////opt/repositories/artoolkit5/bin/video.mkv ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink"
-
-GSTREAMER 0.10 Playback a file (http://stackoverflow.com/questions/1576750/how-to-display-avi-video-with-gstreamer):
-Using Ubuntu14.04, first the missing ffmpeg decode/encoder needs to be installed, because ffmpeg was replaced by libav (https://askubuntu.com/questions/575869/how-do-i-install-gstreamer0-10-ffmpeg-on-ubuntu-14-10/575888):
-- sudo add-apt-repository ppa:mc3man/gstffmpeg-keep
-- sudo apt-get update
-- sudo apt-get install gstreamer0.10-ffmpeg
-
-Get any testvideo: `gst-launch-0.10 -v playbin uri=file:////opt/repositories/artoolkit5/bin/video.mkv` or `gst-launch filesrc location=video.mkv ! decodebin2 name=dec ! ffmpegcolorspace ! autovideosink`
-
+- `./simpleTest "filesrc location=video.mkv ! decodebin2 ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! fakesink"`
+- `gst-launch-0.10 -v playbin uri=file:////path/video.mkv`
+- `gst-launch filesrc location=video.mkv ! decodebin2 name=dec ! ffmpegcolorspace ! autovideosink`
+- don't know why this does not work: `./simpleTest "playbin uri=file:////opt/repositories/artoolkit5/bin/video.mkv ! video/x-raw-rgb,bpp=24 ! fakesink"`
+- Hints
+  - http://stackoverflow.com/questions/1576750/how-to-display-avi-video-with-gstreamer
+  - Using Ubuntu14.04, first the missing ffmpeg decode/encoder needs to be installed, because ffmpeg was replaced by libav (https://askubuntu.com/questions/575869/how-do-i-install-gstreamer0-10-ffmpeg-on-ubuntu-14-10/575888)
+    - `sudo add-apt-repository ppa:mc3man/gstffmpeg-keep`
+    - `sudo apt-get update`
+    - `sudo apt-get install gstreamer0.10-ffmpeg`
 
 ## gstreamer-1.0
 
-- GSTREAMER 1.0 Playback a file https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-plugins/html/gst-plugins-base-plugins-playbin.html():
-- gst-launch-1.0 -v playbin uri=file:///path/to/somefile.mp4
-
-- gst-launch-1.0 -v playbin uri=file:///opt/repositories/artoolkit5/bin/video.mkv
-- gst-launch-1.0 -v filesrc location=/opt/repositories/artoolkit5/bin/video.mkv ! matroskademux ! avdec_h264 ! videoconvert ! autovideosink
-
-other examples:
-- matroska: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-good-plugins/html/gst-plugins-good-plugins-matroskademux.html
-- RAW H264: http://blog.petehouston.com/2015/12/28/play-raw-h264-files-using-gstreamer/
-- RAW YUV: http://stackoverflow.com/questions/27419113/playing-a-raw-video-using-gst-launch
+- `gst-launch-1.0 -v playbin uri=file:///path/to/somefile.mp4`
+- `gst-launch-1.0 -v playbin uri=file:///path/video.mkv`
+- `gst-launch-1.0 -v filesrc location=/path/video.mkv ! matroskademux ! avdec_h264 ! videoconvert ! autovideosink`
+- Hints
+  - GSTREAMER 1.0 Playback a file: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-plugins/html/gst-plugins-base-plugins-playbin.html
+  - matroska: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-good-plugins/html/gst-plugins-good-plugins-matroskademux.html
+  - RAW H264: http://blog.petehouston.com/2015/12/28/play-raw-h264-files-using-gstreamer/
+  - RAW YUV: http://stackoverflow.com/questions/27419113/playing-a-raw-video-using-gst-launch
 
 # Camera Playback
 
