@@ -7,7 +7,8 @@
 
 - Known misstakes
   - in `... ! videoconvert ! video/x-raw width=1920, height=1080, format=RGB ,bpp=24 ! ...` there is now `,` between `video/x-raw` and the afterwards comma-seperated list
-  - Commonly, the sink tells the source what it expects, but if not you can tell the sink with so called `caps` (capabilities) the target format`... ! videoconvert ! video/x-raw width=1920, height=1080, format=RGB ,bpp=24 ! ...`. These `caps` are just another element in the pipeline, but are no plugin.
+  - Commonly, the sink of a plugin tells the source of the other plugin what it expects. But if not you can tell the sink with so called `caps` (capabilities) the target format`... ! videoconvert ! video/x-raw width=1920, height=1080, format=RGB ,bpp=24 ! ...`. These `caps` are just another element in the pipeline, but are no plugin.
+  - The sink and source `caps` can be investigated, if you use the `-v` switch with the tools, ot with `GST_DEBUG=2`
 
 
 # Debugging
