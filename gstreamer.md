@@ -9,7 +9,7 @@
   - in `... ! videoconvert ! video/x-raw width=1920, height=1080, format=RGB ,bpp=24 ! ...` there is now `,` between `video/x-raw` and the afterwards comma-seperated list
   - Commonly, the sink of a plugin tells the source of the other plugin what it expects. But if not you can tell the sink with so called `caps` (capabilities) the target format`... ! videoconvert ! video/x-raw width=1920, height=1080, format=RGB ,bpp=24 ! ...`. These `caps` are just another element in the pipeline, but are no plugin.
   - The sink and source `caps` can be investigated, if you use the `-v` switch with the tools, ot with `GST_DEBUG=2`
-
+- Building test applications: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/pwg/html/chapter-building-testapp.html
 
 # Debugging
 
@@ -143,17 +143,10 @@ But it has the feature, the any program (here it is ARToolkit) which calls this 
   - Client: `simpleTest: ./simpleTest -device=GStreamer  'udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)640, height=(string)480, framerate=30/1" ! rtpvrawdepay ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
 
 Non-WORKING SETUP WITH UDP STREAM from OpenCV Webcam:
-- ./simpleTest -device=GStreamer  'udpsrc port=5000 caps="video/x-raw-rgb, framerate=(fraction)30/1, width=(int)640, height=(int)480, bpp=(int)24, endianness=(int)4321, depth=(int)24, red_mask=(int)16711680, green_mask=(int)65280, blue_mask=(int)255" ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'
+- `./simpleTest -device=GStreamer  'udpsrc port=5000 caps="video/x-raw-rgb, framerate=(fraction)30/1, width=(int)640, height=(int)480, bpp=(int)24, endianness=(int)4321, depth=(int)24, red_mask=(int)16711680, green_mask=(int)65280, blue_mask=(int)255" ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
 
 ###  gstreamer-1.0
 
-- gst-launch-1.0 -v udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)640, height=(string)480, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)1978155436, timestamp-offset=(uint)3180518504, seqnum-offset=(uint)28674" ! rtpvrawdepay ! videoconvert ! ximagesink
-
-#### Testsource
-
-- gst-launch-1.0 -v videotestsrc ! video/x-raw, format=BGR, framerate=25/1, width=100, height=100 ! rtpvrawpay ! udpsink host=localhost port=5000
-- ./simpleTest -device=GStreamer 'udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)100, height=(string)100, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)1744359127, timestamp-offset=(uint)1879147832, seqnum-offset=(uint)3344" ! rtpvrawdepay ! videoconvert video/x-raw, format=RGB ,bpp=24 ! identity name=artoolkit sync=true ! fakesink'
-
-# Other stuff
-
-Building test applications: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/pwg/html/chapter-building-testapp.html
+- testsource
+  - Server: `gst-launch-1.0 -v videotestsrc ! video/x-raw, format=BGR, framerate=25/1, width=100, height=100 ! rtpvrawpay ! udpsink host=localhost port=5000`
+  - Client: `./simpleTest -device=GStreamer 'udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)100, height=(string)100, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)1744359127, timestamp-offset=(uint)1879147832, seqnum-offset=(uint)3344" ! rtpvrawdepay ! videoconvert video/x-raw, format=RGB ,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
