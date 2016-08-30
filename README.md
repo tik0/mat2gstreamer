@@ -2,7 +2,7 @@
 Open camera by OpenCV and send it to UDP/RTP
 
 - Preliminars for Ubuntu 14.04
-  - Install gstreamer1.0: `sudo apt-get install libgstreamer1.0* gstreamer1.0*`
+  - Install gstreamer1.0: `sudo apt-get install libgstreamer1.0* gstreamer1.0* libgstreamer0.10* gstreamer0.10*``
   - Build opencv without gstreamer 0.10 support: `-D WITH_GSTREAMER=ON -D WITH_GSTREAMER_0_10=OFF`
 - Configure the source code: Maybe you have another cameradevice, etc.
 - Build: `cmake . && make`
@@ -31,7 +31,7 @@ Open camera by OpenCV and send it to UDP/RTP
     - Client (with copied caps string from server output with `application/x-rtp`): `gst-launch-1.0 -v udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)100, height=(string)100, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)1978155436, timestamp-offset=(uint)3180518504, seqnum-offset=(uint)28674" ! rtpvrawdepay ! videoconvert ! ximagesink`
   - RAW RTP/UDP using gstreamer 0.10:
   - Server: `gst-launch -v videotestsrc ! video/x-raw-rgb, framerate=25/1, width=100, height=100 ! rtpvrawpay ! udpsink host=localhost port=5000`
-  - Client: `gst-launch-1.0 -v udpsrc port=5000 caps=" application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)RGB, depth=(string)8, width=(string)100, height=(string)100, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)3496538899, clock-base=(uint)2820015588, seqnum-base=(uint)5902" ! rtpvrawdepay ! videoconvert ! ximagesink`
+  - Client: `gst-launch-0.10 -v udpsrc port=5000 caps=" application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)RGB, depth=(string)8, width=(string)100, height=(string)100, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)3496538899, clock-base=(uint)2820015588, seqnum-base=(uint)5902" ! rtpvrawdepay ! autoconvert ! ximagesink`
 - videoconvert feature:
   - https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-plugins/html/gst-plugins-base-plugins-videoconvert.html
   - This will output a test video (generated in YUY2 format) in a video window. If the video sink selected does not support YUY2 videoconvert will automatically convert the video to a format understood by the video sink: `gst-launch-1.0 -v videotestsrc ! video/x-raw,format=YUY2 ! videoconvert ! autovideosink`
