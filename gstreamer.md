@@ -1,4 +1,8 @@
 
+# Notes
+
+- Tested with Ubuntu 14.04.5
+
 # Debugging
 
 - Set debug output for current executed application (http://docs.gstreamer.com/display/GstSDK/gst-launch):
