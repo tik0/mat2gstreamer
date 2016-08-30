@@ -89,29 +89,32 @@ But it has the feature, the any program (here it is ARToolkit) which calls this 
 
 ### gstreamer-0.10
 
-- ./simpleTest "videotestsrc ! video/x-raw-rgb,bpp=24,width=1000,height=1000 ! identity name=artoolkit sync=true ! fakesink"
+- `./simpleTest "videotestsrc ! video/x-raw-rgb,bpp=24,width=1000,height=1000 ! identity name=artoolkit sync=true ! fakesink"`
 
 ### gstreamer-1.0
 
-- ./simpleTest "videotestsrc ! video/x-raw, format=RGB,width=640,height=480,framerate=30/1 ! identity name=artoolkit sync=true ! fakesink"
+- `./simpleTest "videotestsrc ! video/x-raw, format=RGB,width=640,height=480,framerate=30/1 ! identity name=artoolkit sync=true ! fakesink"`
 
 ## Video
 
 ### gstreamer-0.10
 
+### gstreamer-1.0
+
 ## Camera
 
-- ./simpleTest -device=GStreamer  "v4l2src ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink"
+- `./simpleTest -device=GStreamer  "v4l2src ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink"`
 
 ## UDP
 
 ### gstreamer-0.10
 
 - testsource
-  - SERVER: `gst-launch -v videotestsrc ! video/x-raw-rgb, framerate=25/1, width=100, height=100 ! udpsink host=localhost port=5000`
-  - CLIENT: `./simpleTest -device=GStreamer  'udpsrc port=5000 caps="video/x-raw-rgb, framerate=(fraction)25/1, width=(int)100, height=(int)100, bpp=(int)32, endianness=(int)4321, depth=(int)24, red_mask=(int)16711680, green_mask=(int)65280, blue_mask=(int)255" ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
-- camer
-  Client: `simpleTest: ./simpleTest -device=GStreamer  'udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)640, height=(string)480, framerate=30/1" ! rtpvrawdepay ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
+  - Server: `gst-launch -v videotestsrc ! video/x-raw-rgb, framerate=25/1, width=100, height=100 ! udpsink host=localhost port=5000`
+  - Client: `./simpleTest -device=GStreamer  'udpsrc port=5000 caps="video/x-raw-rgb, framerate=(fraction)25/1, width=(int)100, height=(int)100, bpp=(int)32, endianness=(int)4321, depth=(int)24, red_mask=(int)16711680, green_mask=(int)65280, blue_mask=(int)255" ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
+- Camera
+  - Server: `./mat2gstreamer`
+  - Client: `simpleTest: ./simpleTest -device=GStreamer  'udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)640, height=(string)480, framerate=30/1" ! rtpvrawdepay ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
 
 Non-WORKING SETUP WITH UDP STREAM from OpenCV Webcam:
 - ./simpleTest -device=GStreamer  'udpsrc port=5000 caps="video/x-raw-rgb, framerate=(fraction)30/1, width=(int)640, height=(int)480, bpp=(int)24, endianness=(int)4321, depth=(int)24, red_mask=(int)16711680, green_mask=(int)65280, blue_mask=(int)255" ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'
