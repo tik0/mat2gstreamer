@@ -24,7 +24,6 @@ Using H.264 testsamples from `http://jell.yfish.us/`: `http://jell.yfish.us/medi
 
 ## gstreamer-0.10
 
-- `./simpleTest "filesrc location=video.mkv ! decodebin2 ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! fakesink"`
 - `gst-launch-0.10 -v playbin uri=file:////path/video.mkv`
 - `gst-launch filesrc location=video.mkv ! decodebin2 name=dec ! ffmpegcolorspace ! autovideosink`
 - don't know why this does not work: `./simpleTest "playbin uri=file:////opt/repositories/artoolkit5/bin/video.mkv ! video/x-raw-rgb,bpp=24 ! fakesink"`
@@ -123,7 +122,11 @@ Non-WORKING SETUP WITH UDP STREAM from OpenCV Webcam:
 
 
 
-#### Video
+## Video
+
+## gstreamer-0.10
+
+- `- `./simpleTest "filesrc location=video.mkv ! decodebin2 ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! fakesink"``
 
 ### gstreamer-1.0
 
