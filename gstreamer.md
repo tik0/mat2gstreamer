@@ -115,7 +115,8 @@ But it has the feature, the any program (here it is ARToolkit) which calls this 
 
 ### gstreamer-0.10
 
-- `./simpleTest "filesrc location=video.mkv ! decodebin2 ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! fakesink"`
+- h.264/MKV: `./simpleTest "filesrc location=video.mkv ! decodebin2 ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink"`
+- IYUV/AVI (Uncompressed I420): 
 
 ### gstreamer-1.0
 
