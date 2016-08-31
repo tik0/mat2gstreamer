@@ -2,7 +2,7 @@
 Open camera by OpenCV and send it to UDP/RTP
 
 - Preliminars for Ubuntu 14.04
-  - Install gstreamer1.0: `sudo apt-get install libgstreamer1.0* gstreamer1.0* libgstreamer0.10* gstreamer0.10*``
+  - Install gstreamer1.0 and 0.10: `add-apt-repository ppa:mc3man/gstffmpeg-keep && apt-get update && apt-get install libgstreamer1.0* gstreamer1.0* libgstreamer0.10* gstreamer0.10*``
   - Build opencv without gstreamer 0.10 support: `-D WITH_GSTREAMER=ON -D WITH_GSTREAMER_0_10=OFF`
 - Configure the source code: Maybe you have another cameradevice, etc.
 - Build: `cmake . && make`
