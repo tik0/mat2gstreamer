@@ -71,6 +71,20 @@ Using H.264 testsamples from `http://jell.yfish.us/`: `http://jell.yfish.us/medi
 
 - `gst-launch-1.0 v4l2src device="/dev/video0" ! video/x-raw,width=640,height=480 ! autovideosink`
 
+# Shared Memory Playback
+
+## gstreamer-1.0
+
+From: https://mazdermind.wordpress.com/2014/08/29/getting-shmsinkshmsrc-to-work-with-videomixer/
+
+- Server: `gst-launch-1.0   shmsrc socket-path=/tmp/foo !   video/x-raw,width=1000,height=1000,framerate=48/1,format=I420 !   autovideosink`
+- Client (Can be started multiple time)
+  - For display: `gst-launch-1.0 shmsrc socket-path=/tmp/foo ! video/x-raw, format=BGR ,width=640,height=480,framerate=30/1 ! videoconvert ! autovideosink`
+  - For record: `gst-launch-1.0 shmsrc socket-path=/tmp/foo ! video/x-raw,width=640,height=480,framerate=25/1,format=I420 ! avimux ! filesink location=output.avi`
+- With `mat2gstreamer`
+  - Server: `./mat2gstreamer`
+  - Client (My webcam has 640x480@30fps): `gst-launch-1.0 shmsrc socket-path=/tmp/foo ! video/x-raw, format=BGR ,width=640,height=480,framerate=30/1 ! videoconvert ! autovideosink`
+
 # UDP Playback
 
 ## gstreamer-0.10
