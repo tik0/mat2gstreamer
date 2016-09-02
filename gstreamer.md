@@ -160,3 +160,11 @@ Non-WORKING SETUP WITH UDP STREAM from OpenCV Webcam:
 - testsource
   - Server: `gst-launch-1.0 -v videotestsrc ! video/x-raw, format=BGR, framerate=25/1, width=100, height=100 ! rtpvrawpay ! udpsink host=localhost port=5000`
   - Client: `./simpleTest -device=GStreamer 'udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)100, height=(string)100, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)1744359127, timestamp-offset=(uint)1879147832, seqnum-offset=(uint)3344" ! rtpvrawdepay ! videoconvert video/x-raw, format=RGB ,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
+
+# TWB
+
+# gstreamer-1.0
+
+- RTP/UDP: Show the TWB camera attached to the local PC
+  - Server: ./localizationTwb with pipeline: `appsrc ! rtpvrawpay mtu=65000 ! udpsink host=localhost port=5000 max-bitrate=10000000 sync=true`
+  - Client: `gst-launch-1.0 -v udpsrc port=5000 caps=" application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)RGB, depth=(string)8, width=(string)1000, height=(string)1000, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)3496538899, clock-base=(uint)2820015588, seqnum-base=(uint)5902" ! rtpvrawdepay ! videoconvert ! ximagesink`
