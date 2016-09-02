@@ -169,6 +169,15 @@ But it has the feature, the any program (here it is ARToolkit) which calls this 
 Non-WORKING SETUP WITH UDP STREAM from OpenCV Webcam:
 - `./simpleTest -device=GStreamer  'udpsrc port=5000 caps="video/x-raw-rgb, framerate=(fraction)30/1, width=(int)640, height=(int)480, bpp=(int)24, endianness=(int)4321, depth=(int)24, red_mask=(int)16711680, green_mask=(int)65280, blue_mask=(int)255" ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
 
+## Shared Memory
+
+### gstreamer-1.0
+
+- Webcam
+  - Server: `./mat2gstreamer`
+  - Client (Should work, but has segmentation fault when reaching function `arVideoCapStart()`): `./localizationTwb2 --vconf 'shmsrc socket-path=/tmp/foo ! video/x-raw,width=640,height=480,framerate=30/1,format=RGB ! identity name=artoolkit sync=true ! fakesink' --matrixCodeType AR_MATRIX_CODE_3x3 --patternDetectionMode AR_MATRIX_CODE_DETECTION --cpara calibration/cameraTimoNotebook_para.dat`
+  - Client (Works, but only with critical errors: [`GStreamer-CRITICAL **: gst_mini_object_unref: assertion 'mini_object->refcount > 0' faile`]): `/localizationTwb2 --vconf 'shmsrc socket-path=/tmp/foo ! video/x-raw,width=640,height=480,framerate=30/1,format=RGB ! videoconvert ! video/x-raw,format=I420 ! videoconvert ! video/x-raw,format=BGR ! identity name=artoolkit sync=true ! fakesink' --matrixCodeType AR_MATRIX_CODE_3x3 --patternDetectionMode AR_MATRIX_CODE_DETECTION --cpara calibration/cameraTimoNotebook_para.dat`
+
 ###  gstreamer-1.0
 
 - testsource
