@@ -5,6 +5,7 @@
 
 # Hints
 
+- `fdsink, fdsrc`: Is it possible to use it? http://developers-club.com/posts/204014/
 - Streaming: http://www.polytech2go.fr/topinternet/sp_inetmedia/Lect.03.Gstreamer.multimedia.and.internet.pdf
 - Known misstakes
   - in `... ! videoconvert ! video/x-raw width=1920, height=1080, format=RGB ,bpp=24 ! ...` there is now `,` between `video/x-raw` and the afterwards comma-seperated list
