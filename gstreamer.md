@@ -95,6 +95,14 @@ Using H.264 testsamples from `http://jell.yfish.us/`: `http://jell.yfish.us/medi
   - Client: `gst-launch-1.0 -v udpsrc port=5000 caps=" application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)640, height=(string)480, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)3496538899, clock-base=(uint)2820015588, seqnum-base=(uint)5902" ! rtpvrawdepay ! videoconvert ! ximagesink`
   - Server: `./mat2gstreamer`
 
+# TCP Playback
+
+## gstreamer-1.0
+
+- RTP/TCP
+  - Server: `gst-launch-1.0 -v videotestsrc ! video/x-raw, format=RGB, framerate=30/1, width=1000, height=1000 ! gdppay ! tcpserversink port=3000`
+  - Client: `gst-launch-1.0 -v tcpclientsrc port=3000 ! gdpdepay ! videoconvert ! ximagesink`
+
 # ARtoolkit
 
 NOTE:
