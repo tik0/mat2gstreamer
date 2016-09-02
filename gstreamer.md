@@ -150,7 +150,7 @@ But it has the feature, the any program (here it is ARToolkit) which calls this 
   - Client: `./simpleTest -device=GStreamer  'udpsrc port=5000 caps="video/x-raw-rgb, framerate=(fraction)25/1, width=(int)100, height=(int)100, bpp=(int)32, endianness=(int)4321, depth=(int)24, red_mask=(int)16711680, green_mask=(int)65280, blue_mask=(int)255" ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
 - Camera
   - Server: `./mat2gstreamer`
-  - Client: `simpleTest: ./simpleTest -device=GStreamer  'udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)640, height=(string)480, framerate=30/1" ! rtpvrawdepay ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
+  - Client: `./simpleTest -device=GStreamer  'udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)BGR, depth=(string)8, width=(string)640, height=(string)480, framerate=30/1" ! rtpvrawdepay ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
 
 Non-WORKING SETUP WITH UDP STREAM from OpenCV Webcam:
 - `./simpleTest -device=GStreamer  'udpsrc port=5000 caps="video/x-raw-rgb, framerate=(fraction)30/1, width=(int)640, height=(int)480, bpp=(int)24, endianness=(int)4321, depth=(int)24, red_mask=(int)16711680, green_mask=(int)65280, blue_mask=(int)255" ! ffmpegcolorspace ! video/x-raw-rgb,bpp=24 ! identity name=artoolkit sync=true ! fakesink'`
@@ -168,3 +168,6 @@ Non-WORKING SETUP WITH UDP STREAM from OpenCV Webcam:
 - RTP/UDP: Show the TWB camera attached to the local PC
   - Server: ./localizationTwb with pipeline: `appsrc ! rtpvrawpay mtu=65000 ! udpsink host=localhost port=5000 max-bitrate=10000000 sync=true`
   - Client: `gst-launch-1.0 -v udpsrc port=5000 caps=" application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)RGB, depth=(string)8, width=(string)1000, height=(string)1000, colorimetry=(string)SMPTE240M, payload=(int)96, ssrc=(uint)3496538899, clock-base=(uint)2820015588, seqnum-base=(uint)5902" ! rtpvrawdepay ! videoconvert ! ximagesink`
+- RTP/TCP
+  - Server: ./localizationTwb with pipeline: `appsrc! gdppay ! tcpserversink port=3000`
+  - Client : `./localizationTwb2 --vconf 'tcpclientsrc port=3000 ! gdpdepay ! videoconvert video/x-raw, format=RGB ,bpp=24 ! identity name=artoolkit sync=true ! fakesink' --matrixCodeType AR_MATRIX_CODE_3x3 --patternDetectionMode AR_MATRIX_CODE_DETECTION --cpara calibration/camera3twb_para.dat`
