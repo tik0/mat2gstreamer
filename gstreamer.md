@@ -5,7 +5,14 @@
 
 # Hints
 
-- `fdsink, fdsrc`: Is it possible to use it? http://developers-club.com/posts/204014/
+- `fdsink, fdsrc`
+  - Is it possible to use it: http://developers-club.com/posts/204014/
+  - Example of usage: https://www.raspberrypi.org/forums/viewtopic.php?t=49278&p=664616
+- RTSP
+  - https://gstreamer.freedesktop.org/modules/gst-rtsp-server.html
+  - http://stackoverflow.com/questions/13744560/using-gstreamer-to-serve-rtsp-stream-working-example-sought
+  - https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-good-plugins/html/gst-plugins-good-plugins-rtspsrc.html
+  - https://gstreamer.freedesktop.org/documentation/rtp.html
 - Streaming: http://www.polytech2go.fr/topinternet/sp_inetmedia/Lect.03.Gstreamer.multimedia.and.internet.pdf
 - Known misstakes
   - in `... ! videoconvert ! video/x-raw width=1920, height=1080, format=RGB ,bpp=24 ! ...` there is now `,` between `video/x-raw` and the afterwards comma-seperated list
