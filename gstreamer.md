@@ -5,6 +5,8 @@
 
 # Hints
 
+- Commercial
+  - https://gstreamer.freedesktop.org/data/events/gstreamer-conference/2015/Luis%20de%20Bethencourt%20-%20How%20to%20Contribute%20to%20GStreamer.pdf
 - `fdsink, fdsrc`
   - Is it possible to use it: http://developers-club.com/posts/204014/
   - Example of usage: https://www.raspberrypi.org/forums/viewtopic.php?t=49278&p=664616
