@@ -80,6 +80,7 @@ Using H.264 testsamples from `http://jell.yfish.us/`: `http://jell.yfish.us/medi
 ## gstreamer-1.0
 
 - `gst-launch-1.0 v4l2src device="/dev/video0" ! video/x-raw,width=640,height=480 ! autovideosink`
+- Convert for no reason: `gst-launch-1.0 v4l2src device="/dev/video0" ! videoconvert ! video/x-raw,format=RGB,width=640,height=480,framerate=30/1 ! videoconvert ! video/x-raw,format=I420,width=640,height=480,framerate=30/1 ! autovideosink`
 
 # Shared Memory Playback
 
