@@ -40,6 +40,7 @@
 ## gstreamer-1.0
 
 - `gst-launch-1.0 videotestsrc ! video/x-raw, format="I420" ,width=640,height=480,framerate=30/1 ! identity name=artoolkit sync=true ! autovideosink`
+- If `autovideosink` does not work (bacause of VA API stuff), one can use `xvimagesink`
 
 # Video Playback
 
