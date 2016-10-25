@@ -220,7 +220,7 @@ The following test case was applied on a Ubuntu 12.04.5 machine:
 - Build `gst-rtsp-server`
   - `git clone git://anongit.freedesktop.org/gstreamer/gst-rtsp-server && cd gst-rtsp-server`
   - We use gstreamer 1.2: `git checkout remotes/origin/1.2`
-  - Build: `./autogen.sh --noconfigure && ./configure && make`
+  - Build: `./autogen.sh --noconfigure && GST_PLUGINS_GOOD_DIR=$(pkg-config --variable=pluginsdir gstreamer-plugins-bad-1.0) ./configure ./configure && make` (For some reason, `GST_PLUGINS_GOOD_DIR` is not set by `pkg-config`, so we set it explicitly)
 - Test run
   - Run test application: `cd examples && ./test-launch "( videotestsrc ! x264enc ! rtph264pay name=pay0 pt=96 )"`
   - One can now access the stream (e.g. using VLC) remotely by the address: `rtsp://HOST_IP:8554/test`
