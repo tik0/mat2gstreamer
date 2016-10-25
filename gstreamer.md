@@ -11,6 +11,7 @@
   - Is it possible to use it: http://developers-club.com/posts/204014/
   - Example of usage: https://www.raspberrypi.org/forums/viewtopic.php?t=49278&p=664616
 - RTSP
+  - https://gstreamer.freedesktop.org/data/events/gstreamer-conference/2013/GStreamer%20Conference%202013%20-%20Wim%20Taymans%20-%20Latest%20GStreamer%20RTSP%20Server%20features.pdf
   - https://gstreamer.freedesktop.org/modules/gst-rtsp-server.html
   - http://stackoverflow.com/questions/13744560/using-gstreamer-to-serve-rtsp-stream-working-example-sought
   - https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-good-plugins/html/gst-plugins-good-plugins-rtspsrc.html
