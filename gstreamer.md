@@ -206,3 +206,21 @@ Non-WORKING SETUP WITH UDP STREAM from OpenCV Webcam:
 - RTP/TCP
   - Server: ./localizationTwb with pipeline: `appsrc! gdppay ! tcpserversink port=3000`
   - Client : `./localizationTwb2 --vconf 'tcpclientsrc port=3000 ! gdpdepay ! videoconvert video/x-raw, format=RGB ,bpp=24 ! identity name=artoolkit sync=true ! fakesink' --matrixCodeType AR_MATRIX_CODE_3x3 --patternDetectionMode AR_MATRIX_CODE_DETECTION --cpara calibration/camera3twb_para.dat`
+
+# RTSP
+
+In contradiction to RTP, a RTSP server negotiates the connection between a RTP-server and a client on demand.
+Thus, the target address of the RTP stream does not to be known in advance.
+The `gst-rtsp-server` is not a gstreamer plugin, but a library which can be used to implement your own RTSP application.
+The following test case was applied on a Ubuntu 12.04.5 machine:
+
+- Preliminars
+  - Install gstreamer-1.0 with base/good/ugly/bad plugins
+  - Install `autoconf automake autopoint libtool`
+- Build `gst-rtsp-server`
+  - `git clone git://anongit.freedesktop.org/gstreamer/gst-rtsp-server && cd gst-rtsp-server`
+  - We use gstreamer 1.2: `git checkout remotes/origin/1.2`
+  - Build: `./autogen.sh --noconfigure && ./configure && make`
+- Test run
+  - Run test application: `cd examples && ./test-launch "( videotestsrc ! x264enc ! rtph264pay name=pay0 pt=96 )"`
+  - One can now access the stream (e.g. using VLC) remotely by the address: `rtsp://HOST_IP:8554/test`
