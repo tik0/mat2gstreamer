@@ -22,6 +22,11 @@
   - The sink and source `caps` can be investigated, if you use the `-v` switch with the tools, ot with `GST_DEBUG=2`
 - Building test applications: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/pwg/html/chapter-building-testapp.html
 
+# Known issues
+
+- Using idintity plugin to tap images from a gstreamer pipeling into program: http://gstreamer-devel.966125.n4.nabble.com/Using-idintity-plugin-to-tap-images-from-a-gstreamer-pipeling-into-program-td4679750.html , http://gstreamer-devel.966125.n4.nabble.com/Using-identity-causes-memory-leak-Ported-application-from-gstreamer-0-10-to-gstreamer-1-0-td4679488.html
+- Video-Acceleration (X Error of failed request: BadRequest' when using nvidia driver with video acceleration (VA)): http://askubuntu.com/questions/830183/x-error-of-failed-request-badrequest-when-using-nvidia-driver-with-video-acce/831111#831111
+
 # Debugging
 
 - Set debug output for current executed application (http://docs.gstreamer.com/display/GstSDK/gst-launch):
