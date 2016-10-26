@@ -230,3 +230,7 @@ The following test case was applied on a Ubuntu 12.04.5 machine:
 - Test run
   - Run test application: `cd examples && ./test-launch "( videotestsrc ! x264enc ! rtph264pay name=pay0 pt=96 )"`
   - One can now access the stream (e.g. using VLC) remotely by the address: `rtsp://HOST_IP:8554/test`
+  
+## TWB
+
+- Run RTSP application to stream TWB camera (unfunctional try): `./test-launch "( shmsrc socket-path=/tmp/cam1 is-live=true do-timestamp=true ! video/x-raw, format=BGR ,width=1000,height=1000,framerate=48/1, bpp=24 ! videoconvert format="I420" ! x264enc ! rtph264pay name=pay0 pt=96 )"`
