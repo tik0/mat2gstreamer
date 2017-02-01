@@ -234,3 +234,72 @@ The following test case was applied on a Ubuntu 12.04.5 machine:
 ## TWB
 
 - Run RTSP application to stream TWB camera (unfunctional try): `./test-launch "( shmsrc socket-path=/tmp/cam1 is-live=true do-timestamp=true ! video/x-raw, format=BGR ,width=1000,height=1000,framerate=48/1, bpp=24 ! videoconvert format="I420" ! x264enc ! rtph264pay name=pay0 pt=96 )"`
+
+# Play Images TBD
+
+    FOLDER=/media/filestorage/pjuenemann/floor/BMP/;idx=0;for FILE in ${FOLDER}*bmp; do ln -s ${FILE} $(printf '%010d.bmp\n' $idx);idx=$((idx+1)); done
+    FOLDER=/media/filestorage/pjuenemann/floor/PNG/;idx=0;for FILE in ${FOLDER}*png; do ln -s ${FILE} $(printf '%010d.png\n' $idx);idx=$((idx+1)); done
+    gst-launch multifilesrc location=%010d.bmp \ caps="image/bmp,framerate=30/1,pixel-aspect-ratio=1/1" ! ffmpegcolorspace ! video/x-raw-yuv,format=(fourcc)I420 ! imagesink
+    gst-launch multifilesrc location=%010d.bmp caps="image/bmp,framerate=30/1,pixel-aspect-ratio=1/1" ! ffmpegcolorspace ! video/x-raw-yuv,format=(fourcc)I420 ! imagesink
+    gst-launch multifilesrc location=%010d.bmp caps="image/bmp,framerate=30/1,pixel-aspect-ratio=1/1" ! ffmpegcolorspace ! video/x-raw-yuv,format=I420 ! imagesink
+    gst-launch-1.0 multifilesrc location=%010d.bmp caps="image/bmp,framerate=30/1,pixel-aspect-ratio=1/1" ! ffmpegcolorspace ! video/x-raw-yuv,format=I420 ! imagesink
+    gst-launch-1.0 multifilesrc location=%010d.bmp caps="image/bmp,framerate=30/1,pixel-aspect-ratio=1/1" ! video/x-raw-yuv,format=I420 ! imagesink
+    gst-launch-1.0 multifilesrc location=%010d.bmp caps="image/bmp,framerate=30/1,pixel-aspect-ratio=1/1" ! video/x-raw-yuv,format=I420 ! videosink
+    gst-launch-1.0 multifilesrc location=%010d.bmp caps="image/bmp,framerate=30/1,pixel-aspect-ratio=1/1" ! video/x-raw-yuv,format=I420 ! autovideosink
+    gst-launch-1.0 multifilesrc location=%010d.bmp ! caps="image/bmp,framerate=30/1,pixel-aspect-ratio=1/1" ! video/x-raw-yuv,format=I420 ! autovideosink
+    gst-launch-1.0 multifilesrc location=%010d.bmp ! image/bmp,framerate=30/1,pixel-aspect-ratio=1/1 ! video/x-raw-yuv,format=I420 ! autovideosink
+    gst-launch-1.0 multifilesrc location=%010d.bmp ! image/bmp,framerate=30/1,pixel-aspect-ratio=1/1 ! autoconvert ! video/x-raw-yuv,format=I420 ! autovideosink
+    gst-launch-1.0 multifilesrc location=%010d.bmp ! image/bmp,framerate=30/1,pixel-aspect-ratio=1/1 ! autoconvert ! video/x-raw,format=I420 ! autovideosink
+    gst-launch-1.0 multifilesrc location=%010d.bmp ! image/bmp,framerate=30/1,pixel-aspect-ratio=1/1 ! videoconvert ! video/x-raw,format=I420 ! autovideosink
+    gst-launch-1.0 multifilesrc location=%10d.bmp ! image/bmp,framerate=30/1,pixel-aspect-ratio=1/1 ! autoconvert ! video/x-raw,format=I420 ! autovideosink
+    gst-launch-1.0 multifilesrc location=%010d.bmp ! image/bmp,framerate=30/1,pixel-aspect-ratio=1/1 ! autoconvert ! video/x-raw,format=I420 ! autovideosink
+    gst-launch-1.0 multifilesrc location=%010d.bmp index=0 caps="image/bmp,framerate=\(fraction\)30/1,pixel-aspect-ratio=1/1" ! autoconvert ! video/x-raw,format=I420 ! autovideosink
+    gst-launch-1.0 multifilesrc location=%010d.bmp index=0 caps="image/bmp,framerate=\(fraction\)30/1,pixel-aspect-ratio=1/1" ! videoconvert ! video/x-raw,format=I420 ! autovideosink
+    gst-launch-1.0 multifilesrc location=%010d.bmp index=0 caps="image/bmp,framerate=\(fraction\)30/1,pixel-aspect-ratio=1/1" ! autoconvert ! video/x-raw,format=I420 ! videorate ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.bmp" index=0 ! autovideosink
+    gst-launch-1.0 multifilesrc location="%09d.bmp" index=0 ! autovideosink
+    gst-launch-1.0 multifilesrc location="img.%04d.png" index=0 caps="image/png,framerate=\(fraction\)12/1" !     pngdec ! videoconvert ! videorate ! theoraenc ! oggmux ! \
+    gst-launch-1.0 multifilesrc location="img.%010d.png" index=0 caps="image/png,framerate=\(fraction\)12/1" ! pngdec ! videoconvert ! videorate ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=0 caps="image/png,framerate=\(fraction\)12/1" ! pngdec ! videoconvert ! videorate ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=0 caps="image/png,framerate=\(fraction\)12/1" ! pngdec ! videoconvert ! videorate ! autosink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=0 caps="image/png,framerate=\(fraction\)12/1" ! pngdec ! videoconvert  ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=0 caps="image/png,framerate=\(fraction\)12/1" ! pngdec ! videoconvert  ! ximagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=0 caps="image/png,framerate=\(fraction\)12/1" ! pngdec ! videoconvert ! videorate  ! ximagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=0 caps="image/png,framerate=\(fraction\)12/1" ! pngdec ! videoconvert ! videorate  ! ximagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=1 caps="image/png,framerate=\(fraction\)12/1" ! pngdec ! videoconvert ! videorate  ! ximagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=1 caps="image/png,framerate=\(fraction\)30/1" ! pngdec ! videoconvert ! videorate  ! ximagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=1 caps="image/png,framerate=\(fraction\)30/1" ! pngdec ! videoconvert ! videorate ! theoraenc ! oggmux ! filesink location="images.ogg"
+    gst-launch-1.0 multifilesrc location="%010d.png" index=1 caps="image/png,framerate=\(fraction\)30/1" ! pngdec ! videoconvert ! videorate ! theoraenc ! oggmux ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=1 caps="image/png,framerate=\(fraction\)30/1" ! pngdec ! videoconvert ! videorate ! theoraenc ! oggmux ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=1 caps="image/png,framerate=\(fraction\)30/1" ! pngdec ! videoconvert ! videorate ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=1 caps="image/png,framerate=\(fraction\)30/1" ! pngdec ! videoconvert ! videorate ! avdec_png ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" index=1 caps="image/png,framerate=\(fraction\)30/1" !  avdec_png ! autovideosink
+    gst-launch multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw-rgb,framerate=30/1 ! ffmpegcolorspace ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw-rgb,framerate=30/1 ! videoconvert ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw-rgb,framerate=30/1 !  xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw-rgb,framerate=30/1 !  ffmpegcolorspace ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw-rgb,framerate=30/1 !  videoconvert  ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw,format=rgb,framerate=30/1 !  videoconvert  ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw,format=RGB,framerate=30/1 !  videoconvert  ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw,format=RGB,framerate=30/1 !  videoconvert  ! 
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw,format=RGB,framerate=30/1 !  videoconvert  ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw,format=I420,framerate=30/1 !  videoconvert  ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw ,format=I420 ,framerate=30/1 !  videoconvert  ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw ,format=RGB ,framerate=30/1 !  videoconvert  ! xvimagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw ,format=BGR ,framerate=30/1 !  videoconvert  ! xvimagesink
+    gst-launch-0.10 videotestsrc ! ximagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw ,format=RGB ,framerate=30/1 !  videoconvert  ! ximagesink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw ,format=RGB ,framerate=30/1 !  videoconvert  ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw ,format=I420 ,framerate=30/1 !  videoconvert  ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw ,format="I420" ,framerate=30/1 !  videoconvert  ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw ,format="BGR" ,framerate=30/1 !  videoconvert  ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw ,format="RGB" ,framerate=30/1 !  videoconvert  ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! avdec_png ! videorate ! video/x-raw ,format="RGB" ,framerate=30/1 !  videoconvert  ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! avdec_png ! videorate ! video/x-raw ,format="YUV" ,framerate=30/1 !  videoconvert  ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! avdec_png ! videorate ! video/x-raw ,format="RGB" ,framerate=30/1 !  videoconvert  ! autovideosink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! avdec_png ! videorate ! video/x-raw ,format="RGB" ,framerate=30/1 !  videoconvert  ! fpsdisplaysink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! avdec_png ! videorate ! video/x-raw ,format="RGB" ,framerate=30/1 !  fpsdisplaysink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! pngdec ! videorate ! video/x-raw ,format="RGB" ,framerate=30/1 !  fpsdisplaysink
+    gst-launch-1.0 multifilesrc location="%010d.png" ! image/png,framerate=30/1 ! avdec_png ! videorate ! video/x-raw ,format="RGB" ,framerate=30/1 !  videoconvert  ! autovideosink
+    gst-launch-1.0 videotestsrc ! video/x-raw, format="I420" ,width=640,height=480,framerate=30/1 ! identity name=artoolkit sync=true ! autovideosink
+    gst-launch-1.0 videotestsrc ! video/x-raw, format="I420" ,width=640,height=480,framerate=30/1  ! autovideosink
