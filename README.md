@@ -1,3 +1,5 @@
+For hands-on information see [gstreamer.md](gstreamer.md)
+
 # mat2gstreamer
 Open camera by OpenCV and send it to UDP/RTP
 
